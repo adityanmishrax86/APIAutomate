@@ -16,8 +16,8 @@ public class ConfigurationManager {
         }
     }
 
-    public static String getBaseUrl() {
-        return properties.getProperty("base.url.dev");
+    public static String getBaseUrl(boolean isProd) {
+        return isProd ? properties.getProperty("base.url.prod") : properties.getProperty("base.url.dev");
     }
 
     public static String getApiKey() {

@@ -3,17 +3,15 @@ package framework.utils;
 import framework.config.ConfigurationManager;
 
 public class AuthenticationUtils {
+
+    protected static String token = "";
+
     public static String getBearerToken() {
-        // Implement your token generation/retrieval logic
-        return "your-token";
+        return token;
     }
 
-    public static String getBasicAuth() {
-        // Implement Basic Auth
-        return "Basic " + "base64-encoded-credentials";
+    public static void setToken() {
+        AuthenticationUtils.token = ConfigurationManager.getApiKey();
     }
 
-    public static String getApiKey() {
-        return ConfigurationManager.getApiKey();
-    }
-}
+   }
