@@ -3,7 +3,8 @@ package framework.utils;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import framework.models.UserModel;
+
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -14,6 +15,20 @@ public class APIUtils {
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
                 .header("X-Task-Id",taskId)
+                .when()
+                .get(endpoint)
+                .then()
+                .extract()
+                .response();
+    }
+
+    @Step("Making GET request to {endpoint}")
+    public static Response getWithQueryParams(String endpoint, String token, Map<String, Object> queryParams, String taskId) {
+        return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + token)
+                .header("X-Task-Id",taskId)
+                .params(queryParams)
                 .when()
                 .get(endpoint)
                 .then()
@@ -50,11 +65,10 @@ public class APIUtils {
     }
 
     @Step("Making DELETE request to {endpoint}")
-    public static Response delete(String endpoint, Object body, String token, String taskId) {
+    public static Response delete(String endpoint, String token, String taskId) {
         return given()
                 .header("Authorization", "Bearer " + token)
                 .header("X-Task-id",taskId)
-                .body(body)
                 .when()
                 .delete(endpoint)
                 .then()

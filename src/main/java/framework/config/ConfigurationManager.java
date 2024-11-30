@@ -20,6 +20,9 @@ public class ConfigurationManager {
         return isProd ? properties.getProperty("base.url.prod") : properties.getProperty("base.url.dev");
     }
 
+    public static String getProdUrl() {
+
+        return properties.getProperty("base.url.prod");}
     public static String getApiKey() {
         return properties.getProperty("api.key");
     }

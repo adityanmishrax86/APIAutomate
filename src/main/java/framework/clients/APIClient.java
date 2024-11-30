@@ -4,6 +4,8 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import framework.utils.APIUtils;
 
+import java.util.Map;
+
 public class APIClient {
     private final String token;
 
@@ -19,6 +21,19 @@ public class APIClient {
     @Step("Create a New User")
     public Response createNewUser(Object body) {
         return APIUtils.post("users/", body, token, "api-3");
+    }
+
+    @Step("Get All users with Params")
+    public Response getAllUsersWithParams(Map<String, Object> params) {
+        return APIUtils.getWithQueryParams("users/", token, params, "api-6");
+    }
+
+    public Response deleteUsers(String uuid) {
+        return APIUtils.delete("users/"+uuid, token, "api-1");
+    }
+
+    public Response loginUser(Object loginBody) {
+        return APIUtils.post("users/login", loginBody, token, "api-7");
     }
 
 //    @Step("Get user by ID: {userId}")

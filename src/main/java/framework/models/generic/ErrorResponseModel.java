@@ -1,4 +1,4 @@
-package framework.models;
+package framework.models.generic;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
