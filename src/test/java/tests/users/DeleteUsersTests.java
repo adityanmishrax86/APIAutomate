@@ -12,12 +12,17 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.qameta.allure.model.Status;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import shared.SharedUser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DeleteUsersTests extends TestBase {
 
     private final APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
@@ -27,6 +32,7 @@ public class DeleteUsersTests extends TestBase {
     @Story("Delete a user")
     @Description("Delete a user")
     @Severity(SeverityLevel.CRITICAL)
+    @Order(1)
     public void deleteUser() {
 
         String uuid = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -37,7 +43,9 @@ public class DeleteUsersTests extends TestBase {
             AllureManager.addStep("Verify response status", Status.PASSED,
                     "Received Response Status: " + response.getStatusCode());
 
-            assertTrue(SharedUser.sharedUsers.stream().noneMatch(user -> user.getUuid().equals(uuid)));
+            setAllUsers();
+
+            assertTrue(SharedUser.sharedCreatedUsers.stream().noneMatch(user -> user.getUuid().equals(uuid)));
             AllureManager.addStep("Verify User Data", Status.PASSED,
                     "Received User Data: " + uuid);
 
@@ -58,6 +66,7 @@ public class DeleteUsersTests extends TestBase {
     @Story("Delete an unknown user")
     @Description("Delete an unknown user")
     @Severity(SeverityLevel.CRITICAL)
+    @Order(2)
     public void deleteUnknownUser() {
 
         String uuid = BasicUtils.generateUUID();
@@ -84,5 +93,47 @@ public class DeleteUsersTests extends TestBase {
 
         AllureManager.cleanupThreadLocal();
 
+    }
+
+    @Test
+    @Description("Delete a user with an invalid UUID")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Delete User API")
+    @Order(3)
+    public void testDeleteUserWithInvalidUUID() {
+        String invalidUUID = "123-abc";
+        Response response = apiClient.deleteUsers(invalidUUID);
+
+        assertEquals(400, response.getStatusCode());
+        ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
+        assertEquals("parameter \"user_uuid\" in path has an error: minimum string length is 36", errorResponse.getMessage());
+    }
+
+    @Test
+    @Order(4)
+    @Description("Delete a user without authentication")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Delete User API")
+    public void testDeleteUserWithoutAuthentication() {
+        String userUUID = "valid-user-uuid";
+        Response response = apiClient.deleteUsersWOAuth(userUUID);
+
+        assertEquals(401, response.getStatusCode());
+        ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
+        assertEquals("security requirements failed: authentication failed, please set correct \"Bearer\" header", errorResponse.getMessage());
+    }
+
+    @Test
+    @Description("Test SQL injection vulnerability")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("Delete User API")
+    @Order(5)
+    public void testDeleteUserSQLInjection() {
+        String sqlInjectionPayload = "1'; DROP TABLE users;--";
+        Response response = apiClient.deleteUsers(sqlInjectionPayload);
+        ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
+
+        assertEquals(400, response.getStatusCode());
+        assertTrue(errorResponse.getMessage().equals("parameter \"user_uuid\" in path has an error: minimum string length is 36"));
     }
 }

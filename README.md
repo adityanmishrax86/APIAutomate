@@ -13,8 +13,8 @@ This framework provides a robust solution for API testing using REST Assured and
 
 ## Setup Instructions
 1. Clone the repository
-2. Install dependencies: `mvn clean install`
-3. Run tests: `mvn clean test`
+2. Install dependencies: `mvn clean install -DskipTests`
+3. Run tests: `mvn clean test -Dtest=OrderedTestSuite`
 4. Generate Allure report: `mvn allure:serve`
 
 ## Configuration

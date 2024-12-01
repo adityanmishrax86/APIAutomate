@@ -24,7 +24,7 @@ public class TestBase {
         RestAssured.baseURI = ConfigurationManager.getProdUrl();
         List<UserModel> newUsers = new ArrayList<>();
         List<UserModel> newCreatedUsers = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             String mailDomain = "@test.com";
             UserModel createdUser = UserModel.builder()
                     .name(BasicUtils.generateRandomString(10))
@@ -40,8 +40,13 @@ public class TestBase {
                 System.out.println("User Added: " + SharedUser.existingUser.getUuid());
                 newUsers.add(createdUser);
                 newCreatedUsers.add(SharedUser.existingUser);
-            } else
-                break;
+            } else {
+                System.out.println(response.statusCode());
+                if(!newUsers.isEmpty() && !newCreatedUsers.isEmpty())
+                    break;
+                else
+                    System.exit(1);
+            }
         }
 
         SharedUser.sharedUsers = newUsers;
@@ -49,6 +54,16 @@ public class TestBase {
         System.out.println("Initial User Setup Completed");
 
 
+    }
+
+    public static void setAllUsers() {
+        RestAssured.baseURI = ConfigurationManager.getProdUrl();
+        APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
+        Response responseUsers = apiClient.getAllUsers();
+        if (responseUsers.statusCode() == 200) {
+            UserResponseModel userResponse = responseUsers.as(UserResponseModel.class);
+            SharedUser.sharedCreatedUsers = userResponse.getUsers();
+        }
     }
 
     public static void deleteUsers() {
@@ -79,7 +94,7 @@ public class TestBase {
         deleteUsers();
         setUpInitialUser();
 
-        RestAssured.baseURI = ConfigurationManager.getBaseUrl(false);
+        RestAssured.baseURI = ConfigurationManager.getBaseUrl();
         RestAssured.filters(
                 new AllureRestAssured(),
                 new RequestLoggingFilter(),

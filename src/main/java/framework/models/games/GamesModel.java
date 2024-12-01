@@ -15,13 +15,6 @@ public class GamesModel {
     private String title;
     private String uuid;
     private int price;
-    private List<CategoryUUID> category_uuids;
+    private List<String> category_uuids;
 
-    @Data
-    @Builder(toBuilder = true)
-    @AllArgsConstructor
-    @NoArgsConstructor
-    static class CategoryUUID {
-        private String uuid;
-    }
 }

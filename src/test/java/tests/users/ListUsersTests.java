@@ -296,7 +296,7 @@ public class ListUsersTests extends TestBase {
             UserResponseModel userResponse = response.as(UserResponseModel.class);
             List<UserModel> users = userResponse.getUsers();
 
-            List<UserModel> offsetSharedUsers = SharedUser.sharedUsers.subList(3, SharedUser.sharedUsers.size());
+            List<UserModel> offsetSharedUsers = SharedUser.sharedCreatedUsers.subList(3, SharedUser.sharedCreatedUsers.size());
             assertEquals(offsetSharedUsers.get(0).getUuid(), users.get(0).getUuid());
 
             AllureManager.addStep("Verify Users Data", Status.PASSED,
@@ -326,7 +326,7 @@ public class ListUsersTests extends TestBase {
             UserResponseModel userResponse = response.as(UserResponseModel.class);
             List<UserModel> users = userResponse.getUsers();
 
-            assertEquals(SharedUser.sharedUsers.get(0).getUuid(), users.get(0).getUuid());
+            assertEquals(SharedUser.sharedCreatedUsers.get(0).getUuid(), users.get(0).getUuid());
 
             AllureManager.addStep("Verify Users Data", Status.PASSED,
                     "Received Users Data: " + users);
@@ -462,7 +462,7 @@ public class ListUsersTests extends TestBase {
             UserResponseModel userResponse = response.as(UserResponseModel.class);
             List<UserModel> users = userResponse.getUsers();
 
-            List<UserModel> offsetSharedUsers = SharedUser.sharedUsers.subList(2, SharedUser.sharedUsers.size());
+            List<UserModel> offsetSharedUsers = SharedUser.sharedCreatedUsers.subList(2, SharedUser.sharedCreatedUsers.size());
             assertEquals(offsetSharedUsers.get(0).getUuid(), users.get(0).getUuid());
 
             AllureManager.addStep("Verify Users Data", Status.PASSED,

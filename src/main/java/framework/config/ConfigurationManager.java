@@ -16,7 +16,8 @@ public class ConfigurationManager {
         }
     }
 
-    public static String getBaseUrl(boolean isProd) {
+    public static String getBaseUrl() {
+        boolean isProd = Boolean.parseBoolean(properties.getProperty("is.prod"));
         return isProd ? properties.getProperty("base.url.prod") : properties.getProperty("base.url.dev");
     }
 

@@ -92,7 +92,7 @@ public class LoginUserTests extends TestBase {
 
             UserModel userModel = response.as(UserModel.class);
 
-            assertTrue(SharedUser.sharedUsers.stream().anyMatch(user -> user.getEmail().equals(userModel.getEmail())));
+            assertTrue(SharedUser.sharedCreatedUsers.stream().anyMatch(user -> user.getEmail().equals(userModel.getEmail())));
             AllureManager.addStep("Verify User Data", Status.PASSED,
                     "Received User Data: " + userModel);
 
