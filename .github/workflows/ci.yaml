@@ -30,6 +30,24 @@ jobs:
           java-version: '23'
           distribution: 'temurin'
 
+      # Cache Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Cache Node.js dependencies
+      - name: Cache npm packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-    
+
       - name: Install Maven dependencies
         run: mvn install -DskipTests
 
@@ -61,10 +79,13 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          echo "Attempting to deploy to Netlify"
-          netlify deploy \
+          echo "Attempting to Deploy"
+          DEPLOY_OUTPUT=$(netlify deploy \
+            --dir=allure-report \
             --prod \
             --site $NETLIFY_SITE_ID \
             --auth $NETLIFY_AUTH_TOKEN \
-            --message "Allure Report Deployment from GitHub Actions" \
-            --files=allure-report.zip
+            --json)
+          DEPLOY_URL=$(echo $DEPLOY_OUTPUT | jq -r '.deploy_url')
+          echo "Deployment URL: $DEPLOY_URL"
+          echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_OUTPUT
