@@ -36,7 +36,7 @@ public class RemoveWishlistsTests extends TestBase {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getUserWishlist(userId);
 
-        assertEquals(response.getStatusCode(), 200);
+        assertEquals(200,response.getStatusCode());
         WishListModel wishListModel = response.as(WishListModel.class);
         assertEquals(wishListModel.getItems().size(), 0);
         assertTrue(wishListModel.getUser_uuid().equals(userId));
@@ -50,7 +50,7 @@ public class RemoveWishlistsTests extends TestBase {
     public void AddUserWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getGames();
-        assertEquals(response.getStatusCode(), 200);
+        assertEquals(200,response.getStatusCode());
         GameResponseModel gameResponseModel = response.as(GameResponseModel.class);
         assertEquals(gameResponseModel.getGames().size(), 10);
 
@@ -58,7 +58,7 @@ public class RemoveWishlistsTests extends TestBase {
 
         Response wishResponse = apiClient.addGameToWishlist3(userId, body);
 
-        assertEquals(wishResponse.getStatusCode(), 200);
+        assertEquals(200,wishResponse.getStatusCode());
         WishListModel wishListModel = wishResponse.as(WishListModel.class);
         assertEquals(wishListModel.getItems().size(), 1);
         assertTrue(wishListModel.getItems().get(0).getUuid().equals(gameResponseModel.getGames().get(0).getUuid()));
@@ -76,7 +76,7 @@ public class RemoveWishlistsTests extends TestBase {
 
         Response wishResponse = apiClient.removeGameFromWishlist(userId, body);
 
-        assertEquals(wishResponse.getStatusCode(), 404);
+        assertEquals(404,wishResponse.getStatusCode());
         ErrorResponseModel wishListModel = wishResponse.as(ErrorResponseModel.class);
         assertEquals(wishListModel.getMessage(),"Could not find game with \"uuid\": " + body.get("item_uuid"));
     }
@@ -89,17 +89,17 @@ public class RemoveWishlistsTests extends TestBase {
     public void RemoveUserGameWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getGames();
-        assertEquals(response.getStatusCode(), 200);
+        assertEquals(200,response.getStatusCode());
         GameResponseModel gameResponseModel = response.as(GameResponseModel.class);
-        assertEquals(gameResponseModel.getGames().size(), 10);
+        assertEquals(10,gameResponseModel.getGames().size());
 
         Map<String, Object> body = Map.of("item_uuid", gameResponseModel.getGames().get(0).getUuid());
 
         Response wishResponse = apiClient.removeGameFromWishlist(userId, body);
 
-        assertEquals(wishResponse.getStatusCode(), 200);
+        assertEquals(200,wishResponse.getStatusCode());
         WishListModel wishListModel = wishResponse.as(WishListModel.class);
-        assertEquals(wishListModel.getItems().size(), 0);
+        assertEquals(0,wishListModel.getItems().size());
 //        assertTrue(wishListModel.getItems().get(0).getUuid().equals(gameResponseModel.getGames().get(0).getUuid()));
     }
 

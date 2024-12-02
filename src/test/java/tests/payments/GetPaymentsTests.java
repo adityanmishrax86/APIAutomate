@@ -77,7 +77,7 @@ public class GetPaymentsTests extends TestBase {
         String paymentId = SharedPayments.sharedPayments.get(0).getUuid();
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response paymentResponse = apiClient.getASinglePayment(paymentId);
-        assertEquals(paymentResponse.getStatusCode(), 200);
+        assertEquals(200,paymentResponse.getStatusCode());
         PaymentsModel paymentModel = paymentResponse.as(PaymentsModel.class);
         assertEquals(paymentId, paymentModel.getUuid());
         assertEquals(userId, paymentModel.getUser_uuid());

@@ -37,7 +37,7 @@ public class GetCartsTests extends TestBase {
     public void AddGamesToCart() {
         Map<String, Object> body = new HashMap<>();
         Response gameResponse = apiClient.getGames();
-        assertEquals(gameResponse.getStatusCode(), 200);
+        assertEquals(200, gameResponse.getStatusCode());
         GameResponseModel gameResponseModel = gameResponse.as(GameResponseModel.class);
         assertFalse(gameResponseModel.getGames().isEmpty());
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -61,7 +61,7 @@ public class GetCartsTests extends TestBase {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", BasicUtils.generateUUID());
         Response cartResponse = apiClient.clearCartItems(userId, body);
-        assertEquals(cartResponse.getStatusCode(), 200);
+        assertEquals(200,cartResponse.getStatusCode());
         CartModel cartModel = cartResponse.as(CartModel.class);
         assertTrue(cartModel.getItems().isEmpty());
         assertEquals(0, cartModel.getTotal_price());
@@ -75,7 +75,7 @@ public class GetCartsTests extends TestBase {
     public void AddGamesToCartAgain() {
         Map<String, Object> body = new HashMap<>();
         Response gameResponse = apiClient.getGames();
-        assertEquals(gameResponse.getStatusCode(), 200);
+        assertEquals(200,gameResponse.getStatusCode());
         GameResponseModel gameResponseModel = gameResponse.as(GameResponseModel.class);
         assertFalse(gameResponseModel.getGames().isEmpty());
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -84,7 +84,7 @@ public class GetCartsTests extends TestBase {
             body = Map.of("item_uuid", gameResponseModel.getGames().get(i-1).getUuid(), "quantity", 1);
             Response cartResponse = apiClient.addGameToCart(userId, body);
 
-            assertEquals(cartResponse.getStatusCode(), 200);
+            assertEquals(200,cartResponse.getStatusCode());
             SharedCart.sharedCarts.add(cartResponse.as(CartModel.class));
         }
 
@@ -99,7 +99,7 @@ public class GetCartsTests extends TestBase {
     public void GetCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response cartResponse = apiClient.getUserCart(userId);
-        assertEquals(cartResponse.getStatusCode(), 200);
+        assertEquals(200,cartResponse.getStatusCode());
         CartModel cartModel = cartResponse.as(CartModel.class);
         assertFalse(cartModel.getItems().isEmpty());
         assertEquals(cartModel.getTotal_price(), (int) cartModel.getItems().stream().map(x -> x.getTotal_price() * x.getQuantity()).reduce(0, Integer::sum));
@@ -114,7 +114,7 @@ public class GetCartsTests extends TestBase {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", SharedCart.sharedCarts.get(0).getItems().get(0).getItem_uuid(), "quantity", 5);
         Response cartResponse = apiClient.changeCartItems(userId, body);
-        assertEquals(cartResponse.getStatusCode(), 200);
+        assertEquals(200, cartResponse.getStatusCode());
         CartModel cartModel = cartResponse.as(CartModel.class);
         assertFalse(cartModel.getItems().isEmpty());
         assertEquals(cartModel.getTotal_price(), (int) cartModel.getItems().stream().map(CartItemModel::getTotal_price).reduce(0, Integer::sum));
@@ -130,7 +130,7 @@ public class GetCartsTests extends TestBase {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", SharedCart.sharedCarts.get(0).getItems().get(0).getItem_uuid());
         Response cartResponse = apiClient.removeCartItems(userId, body);
-        assertEquals(cartResponse.getStatusCode(), 200);
+        assertEquals(200,cartResponse.getStatusCode());
         CartModel cartModel = cartResponse.as(CartModel.class);
         assertFalse(cartModel.getItems().isEmpty());
         assertEquals(cartModel.getTotal_price(), (int) cartModel.getItems().stream().map(CartItemModel::getTotal_price).reduce(0, Integer::sum));
@@ -146,7 +146,7 @@ public class GetCartsTests extends TestBase {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", BasicUtils.generateUUID());
         Response cartResponse = apiClient.removeCartItems(userId, body);
-        assertEquals(cartResponse.getStatusCode(), 404);
+        assertEquals(404,cartResponse.getStatusCode());
         ErrorResponseModel errorResponseModel = cartResponse.as(ErrorResponseModel.class);
         assertEquals(("Could not find cart_item with \"uuid\": " + body.get("item_uuid")), errorResponseModel.getMessage());
 

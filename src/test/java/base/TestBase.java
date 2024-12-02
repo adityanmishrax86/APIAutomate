@@ -136,9 +136,7 @@ public class TestBase {
         RestAssured.config = configureConnectionHandling();
         RestAssured.baseURI = ConfigurationManager.getBaseUrl();
         RestAssured.filters(
-                new AllureRestAssured(),
-                new RequestLoggingFilter(),
-                new ResponseLoggingFilter()
+                new AllureRestAssured()
         );
     }
 }

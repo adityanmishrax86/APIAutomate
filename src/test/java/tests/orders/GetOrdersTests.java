@@ -54,7 +54,7 @@ public class GetOrdersTests extends TestBase {
             }
             body1.put("items", body2);
             Response orderResponse = apiClient.addOrders(userId, body1);
-            assertEquals(orderResponse.getStatusCode(), 200);
+            assertEquals(200,orderResponse.getStatusCode());
             OrderModel orderModel = orderResponse.as(OrderModel.class);
             SharedOrders.sharedOrders.add(orderModel);
         }
@@ -139,7 +139,7 @@ public class GetOrdersTests extends TestBase {
         String orderId = SharedOrders.sharedOrders.get(0).getUuid();
         body.put("status", "canceled");
         Response orderResponse = apiClient.updateOrdersStatus(orderId, body);
-        assertEquals(orderResponse.getStatusCode(), 200);
+        assertEquals(200,orderResponse.getStatusCode());
         OrderModel orderModel = orderResponse.as(OrderModel.class);
         assertEquals("canceled", orderModel.getStatus());
 

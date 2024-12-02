@@ -30,7 +30,7 @@ public class UpdateAvatarTests extends TestBase {
         String userID = SharedUser.sharedCreatedUsers.get(0).getUuid();
         File file = new File("src/test/resources/avatar.jpeg");
         Response response = apiClient.updateUserAvatar(userID, file);
-        assertEquals(response.getStatusCode(), 200);
+        assertEquals(200, response.getStatusCode());
         UserModel updatedUser = response.as(UserModel.class);
         assertTrue(updatedUser.getAvatar_url().contains("https://gravatar.com/avatar/"));
     }
