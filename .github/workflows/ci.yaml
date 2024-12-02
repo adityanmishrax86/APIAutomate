@@ -43,9 +43,7 @@ jobs:
 
       - name: Zip Allure Report
         run: |
-          mkdir allure-report
-          cp -r target/site/allure-maven-plugin target/allure-report
-          zip -r allure-report.zip allure-report
+          zip -r allure-report.zip target/site/allure-maven-plugin
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
@@ -65,8 +63,8 @@ jobs:
         run: |
           echo "Attempting to deploy to Netlify"
           netlify deploy \
-            --dir=./ \
             --prod \
             --site $NETLIFY_SITE_ID \
             --auth $NETLIFY_AUTH_TOKEN \
-            --message "Allure Report Deployment from GitHub Actions"
+            --message "Allure Report Deployment from GitHub Actions" \
+            --files=allure-report.zip
