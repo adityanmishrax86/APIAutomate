@@ -44,7 +44,7 @@ jobs:
       - name: Zip Allure Report
         run: |
           mkdir allure-report
-          cp -r target/allure-results target/allure-report
+          cp -r target/site/allure-maven-plugin target/allure-report
           zip -r allure-report.zip allure-report
 
       - name: Install Netlify CLI
