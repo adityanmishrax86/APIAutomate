@@ -16,7 +16,7 @@ public class APIClient {
 
     @Step("Get All Users")
     public Response getAllUsers() {
-        return APIUtils.get("users/", token, "api-21");
+        return APIUtils.get("users/", token, "api-6");
     }
 
     @Step("Create a New User")
@@ -24,9 +24,14 @@ public class APIClient {
         return APIUtils.post("users/", body, token, "api-3");
     }
 
+    @Step("Create a New User")
+    public Response createNewUser2(Object body) {
+        return APIUtils.post("users/", body, token, "api-22");
+    }
+
     @Step("Get All users with Params")
     public Response getAllUsersWithParams(Map<String, Object> params) {
-        return APIUtils.getWithQueryParams("users/", token, params, "api-6");
+        return APIUtils.getWithQueryParams("users/", token, params, "api-21");
     }
 
     public Response deleteUsers(String uuid) {
@@ -53,6 +58,11 @@ public class APIClient {
 
     @Step("Update user")
     public Response updateUser(String uuid, Object body) {
+        return APIUtils.put("users/" + uuid, body, token, "api-24");
+    }
+
+    @Step("Update user")
+    public Response updateUser2(String uuid, Object body) {
         return APIUtils.put("users/" + uuid, body, token, "api-4");
     }
 

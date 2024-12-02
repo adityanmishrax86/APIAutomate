@@ -23,9 +23,9 @@ public class UpdateAvatarTests extends TestBase {
     private final APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate User Avatar API")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Update User Avatar API")
     public void updateAvatar() {
         String userID = SharedUser.sharedCreatedUsers.get(0).getUuid();
         File file = new File("src/test/resources/avatar.jpeg");

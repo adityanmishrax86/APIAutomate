@@ -29,9 +29,9 @@ public class RemoveWishlistsTests extends TestBase {
 
     @Test
     @Order(1)
-    @Description("Get All GAmes")
+    @Description("Validate All Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Get User Wishlists")
     public void getUserWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getUserWishlist(userId);
@@ -44,9 +44,9 @@ public class RemoveWishlistsTests extends TestBase {
 
     @Test
     @Order(2)
-    @Description("Get All GAmes")
+    @Description("Validate All Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Create New User Wishlist")
     public void AddUserWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getGames();
@@ -66,9 +66,9 @@ public class RemoveWishlistsTests extends TestBase {
 
     @Test
     @Order(3)
-    @Description("Get All GAmes")
+    @Description("Validate All Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Remove from wishlist which is not present")
     public void RemoveUserGameNotPresentWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
 
@@ -82,10 +82,10 @@ public class RemoveWishlistsTests extends TestBase {
     }
 
     @Test
-    @Order(2)
-    @Description("Get All GAmes")
+    @Order(4)
+    @Description("Validate All Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Remove form wishlist ")
     public void RemoveUserGameWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getGames();

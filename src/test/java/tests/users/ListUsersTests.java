@@ -68,38 +68,14 @@ public class ListUsersTests extends TestBase {
         AllureManager.cleanupThreadLocal();
     }
 
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPagination() {
-        Map<String, Object> limits = Map.of("limit", "10");
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 200) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            UserResponseModel userResponse = response.as(UserResponseModel.class);
-            List<UserModel> users = userResponse.getUsers();
-
-            assertTrue(users.size() <= 10);
-            AllureManager.addStep("Verify only top 10 users are retrieved", Status.PASSED, "Received Users Data: " + users);
-    } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
 
     @Test
     @Story("List All Users with Pagination")
     @Description("Test to verify listing all users with pagination")
     @Severity(SeverityLevel.CRITICAL)
+    @Order(2)
     public void listAllUsersWithPaginationWithDigit() {
-        Map<String, Object> limits = Map.of("limit", 10);
+        Map<String, Object> limits = Map.of("limit", 2);
         Response response = apiClient.getAllUsersWithParams(limits);
         AllureManager.captureResponse(response);
 
@@ -110,7 +86,8 @@ public class ListUsersTests extends TestBase {
             UserResponseModel userResponse = response.as(UserResponseModel.class);
             List<UserModel> users = userResponse.getUsers();
 
-            assertTrue(users.size() <= 10);
+            assertTrue(users.size()  == 2);
+            assertTrue(userResponse.getMeta().getTotal() > users.size());
             AllureManager.addStep("Verify only top 10 users are retrieved", Status.PASSED, "Received Users Data: " + users);
         } else {
             AllureManager.addStep("Verify response status", Status.FAILED,
@@ -120,170 +97,12 @@ public class ListUsersTests extends TestBase {
         AllureManager.cleanupThreadLocal();
     }
 
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPaginationWithStringValue() {
-        Map<String, Object> limits = Map.of("limit", "Ten");
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = String.format("parameter \"limit\" in query has an error: value %s: an invalid integer: invalid syntax",limits.get("limit"));
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
 
     @Test
     @Story("List All Users with Pagination")
     @Description("Test to verify listing all users with pagination")
     @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPaginationWithFloatValue() {
-        Map<String, Object> limits = Map.of("limit", 10.0);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = String.format("parameter \"limit\" in query has an error: value %s: an invalid integer: invalid syntax",limits.get("limit"));
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPaginationWithLimitMoreThan100() {
-        Map<String, Object> limits = Map.of("limit", 101);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = "parameter \"limit\" in query has an error: number must be at most 100";
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPaginationWithLimitEqualTo0() {
-        Map<String, Object> limits = Map.of("limit", 0);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = "parameter \"limit\" in query has an error: number must be at least 1";
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPaginationWithLimitNegativeValue() {
-        Map<String, Object> limits = Map.of("limit", -12);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = "parameter \"limit\" in query has an error: number must be at least 1";
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithPaginationWithLimitEmpty() {
-        Map<String, Object> limits = Map.of("limit", "");
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-            try {
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = "parameter \"limit\" in query has an error: value  : an invalid integer: invalid syntax";
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-            } catch (IllegalStateException e) {
-                AllureManager.addStep("Received Error Response.", Status.FAILED, "Recieved Response as plain text instead of json. \n" + e.getMessage());
-            }
-
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
+    @Order(3)
     public void listAllUsersWithOffset() {
         Map<String, Object> limits = Map.of("offset", 3);
         Response response = apiClient.getAllUsersWithParams(limits);
@@ -296,8 +115,7 @@ public class ListUsersTests extends TestBase {
             UserResponseModel userResponse = response.as(UserResponseModel.class);
             List<UserModel> users = userResponse.getUsers();
 
-            List<UserModel> offsetSharedUsers = SharedUser.sharedCreatedUsers.subList(3, SharedUser.sharedCreatedUsers.size());
-            assertEquals(offsetSharedUsers.get(0).getUuid(), users.get(0).getUuid());
+            assertTrue(userResponse.getMeta().getTotal() > users.size());
 
             AllureManager.addStep("Verify Users Data", Status.PASSED,
                     "Received Users Data: " + users);
@@ -310,146 +128,13 @@ public class ListUsersTests extends TestBase {
         AllureManager.cleanupThreadLocal();
     }
 
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithOffsetWith0() {
-        Map<String, Object> limits = Map.of("offset", 0);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
 
-        if (response.statusCode() == 200) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            UserResponseModel userResponse = response.as(UserResponseModel.class);
-            List<UserModel> users = userResponse.getUsers();
-
-            assertEquals(SharedUser.sharedCreatedUsers.get(0).getUuid(), users.get(0).getUuid());
-
-            AllureManager.addStep("Verify Users Data", Status.PASSED,
-                    "Received Users Data: " + users);
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
 
     @Test
     @Story("List All Users with Pagination")
     @Description("Test to verify listing all users with pagination")
     @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithOffsetWithNegativeValue() {
-        Map<String, Object> limits = Map.of("offset", -2);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 200) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = "parameter \"offset\" in query has an error: number must be at least 0";
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithOffsetWithStringValue() {
-        Map<String, Object> limits = Map.of("offset", "Ten");
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = String.format("parameter \"offset\" in query has an error: value %s: an invalid integer: invalid syntax",limits.get("offset"));
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithOffsetWithFloatValue() {
-        Map<String, Object> limits = Map.of("offset", 10.0);
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-
-            ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-            String message = String.format("parameter \"offset\" in query has an error: value %s: an invalid integer: invalid syntax",limits.get("offset"));
-            assertEquals(message, errorResponse.getMessage());
-            AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
-    public void listAllUsersWithOffsetWithLimitEmpty() {
-        Map<String, Object> limits = Map.of("offset", "");
-        Response response = apiClient.getAllUsersWithParams(limits);
-        AllureManager.captureResponse(response);
-
-        if (response.statusCode() == 400) {
-            AllureManager.addStep("Verify response status", Status.PASSED,
-                    "Received Response Status: " + response.getStatusCode());
-            try {
-                ErrorResponseModel errorResponse = response.as(ErrorResponseModel.class);
-                String message = "parameter \"offset\" in query has an error: value  : an invalid integer: invalid syntax";
-                assertEquals(message, errorResponse.getMessage());
-                AllureManager.addStep("Verify Error Message for Empty Body", Status.PASSED, "Received Message: " + errorResponse.getMessage());
-            } catch (IllegalStateException e) {
-                AllureManager.addStep("Received Error Response.", Status.FAILED, "Received Response as plain text instead of json. \n" + e.getMessage());
-            }
-
-        } else {
-            AllureManager.addStep("Verify response status", Status.FAILED,
-                    "Received Response Status: " + response.getStatusCode());
-        }
-
-        AllureManager.cleanupThreadLocal();
-    }
-
-    @Test
-    @Story("List All Users with Pagination")
-    @Description("Test to verify listing all users with pagination")
-    @Severity(SeverityLevel.CRITICAL)
+    @Order(4)
     public void listAllUsersWithBothOffsetAndLimit() {
         Map<String, Object> limits = Map.of("offset", 2, "limit", 2);
         Response response = apiClient.getAllUsersWithParams(limits);

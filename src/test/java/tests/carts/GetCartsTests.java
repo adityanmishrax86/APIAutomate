@@ -30,9 +30,9 @@ public class GetCartsTests extends TestBase {
     private final APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Create Items to Cart")
     @Order(1)
     public void AddGamesToCart() {
         Map<String, Object> body = new HashMap<>();
@@ -54,9 +54,9 @@ public class GetCartsTests extends TestBase {
 
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Get All cart items")
     @Order(2)
     public void GetCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -68,9 +68,9 @@ public class GetCartsTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Change Cart items")
     @Order(3)
     public void ChangeCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -84,9 +84,9 @@ public class GetCartsTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Remove Cart items")
     @Order(4)
     public void RemoveCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -100,9 +100,9 @@ public class GetCartsTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Remove cart items with invalid id")
     @Order(5)
     public void RemoveCartItemsWithInvalidUUID() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -115,9 +115,9 @@ public class GetCartsTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Clear Cart items")
     @Order(5)
     public void ClearCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();

@@ -33,9 +33,9 @@ public class GetOrdersTests extends TestBase {
     private final APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Orders APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Create Orders for the User")
     @Order(1)
     public void AddOrders() {
         Map<String, Object> body = new HashMap<>();
@@ -64,9 +64,9 @@ public class GetOrdersTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Orders APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("List all the Orders of the Users")
     @Order(2)
     public void ListAllOrders() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
@@ -81,9 +81,9 @@ public class GetOrdersTests extends TestBase {
 
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Orders APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("List all the Orders of the User with Limit")
     @Order(3)
     public void ListAllOrdersWithLimit() {
         Map<String, Object> body = new HashMap<>();
@@ -100,9 +100,9 @@ public class GetOrdersTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Orders APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Add the same order at one time")
     @Order(4)
     public void AddSameOrder() {
         Map<String, Object> body = new HashMap<>();
@@ -130,9 +130,9 @@ public class GetOrdersTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Orders APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Update the Order status to Canceled")
     @Order(5)
     public void UpdateOrderStatus() {
         Map<String, Object> body = new HashMap<>();
@@ -146,9 +146,9 @@ public class GetOrdersTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate All Orders APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Update the Order Status Again after it is updated")
     @Order(6)
     public void UpdateOrderStatusAgain() {
         Map<String, Object> body = new HashMap<>();

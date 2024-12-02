@@ -13,12 +13,16 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.qameta.allure.model.Status;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import shared.SharedUser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class LoginUserTests extends TestBase {
 
     private final APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
@@ -27,8 +31,9 @@ public class LoginUserTests extends TestBase {
     @Story("Invalid Login Credentials")
     @Description("Test to verify invalid login credentials")
     @Severity(SeverityLevel.CRITICAL)
+    @Order(1)
     public void loginUserWithInvalidCredentials() {
-        LoginModel loginModel = LoginModel.createLoginUser("invalidUser@test.com", "invalidPassword");
+        LoginModel loginModel = LoginModel.builder().email("invalidUser@test.com").password("invalidPassword").build();
         Response response = apiClient.loginUser(loginModel);
         AllureManager.captureResponse(response);
 
@@ -53,8 +58,9 @@ public class LoginUserTests extends TestBase {
     @Story("Invalid Login Credentials")
     @Description("Test to verify invalid login credentials with correct email address")
     @Severity(SeverityLevel.CRITICAL)
+    @Order(2)
     public void loginUserWithCorrectEmailAddress() {
-        LoginModel loginModel = LoginModel.createLoginUser(SharedUser.existingUser.getEmail(), "invalidPassword");
+        LoginModel loginModel = LoginModel.builder().email(SharedUser.existingUser.getEmail()).password("invalidPassword").build();
         Response response = apiClient.loginUser(loginModel);
         AllureManager.captureResponse(response);
 
@@ -80,9 +86,13 @@ public class LoginUserTests extends TestBase {
     @Story("Invalid Login Credentials")
     @Description("Test to verify invalid login credentials with correct email address")
     @Severity(SeverityLevel.CRITICAL)
+    @Order(3)
     public void loginUser() {
 
-        LoginModel loginModel = LoginModel.createLoginUser(SharedUser.sharedUsers.get(0).getEmail(), SharedUser.sharedUsers.get(0).getPassword());
+        LoginModel loginModel = LoginModel.builder()
+                .email(SharedUser.sharedUsers.get(0).getEmail())
+                .password(SharedUser.sharedUsers.get(0).getPassword())
+                .build();
         Response response = apiClient.loginUser(loginModel);
         AllureManager.captureResponse(response);
 

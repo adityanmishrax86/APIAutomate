@@ -26,9 +26,9 @@ public class GetCategoriesTests extends TestBase {
 
     @Test
     @Order(1)
-    @Description("Get All GAmes")
+    @Description("Validate all Categories APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Look for all Categories")
     public void validateGetAllCategories() {
         Response response = apiClient.getCategories();
         if(response.statusCode()== 200){
@@ -41,9 +41,9 @@ public class GetCategoriesTests extends TestBase {
 
     @Test
     @Order(2)
-    @Description("Get All GAmes")
+    @Description("Validate all Categories APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Look for the Games as per the category")
     public void validateGetGamesAsPerCategory() {
         String categoryId = SharedGames.sharedCategories.get(0).getUuid();
         Response response = apiClient.getGamesAsPerCategory(categoryId);
@@ -57,10 +57,10 @@ public class GetCategoriesTests extends TestBase {
     }
 
     @Test
-    @Order(2)
-    @Description("Get All GAmes")
+    @Order(3)
+    @Description("Validate all Categories APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Look for the games with invalid category")
     public void validateGetGamesAsPerInvalidCategory() {
         String categoryId = BasicUtils.generateUUID();
         Response response = apiClient.getGamesAsPerCategory(categoryId);

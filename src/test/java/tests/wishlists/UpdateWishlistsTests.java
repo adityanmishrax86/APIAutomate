@@ -27,9 +27,9 @@ public class UpdateWishlistsTests extends TestBase {
 
     @Test
     @Order(1)
-    @Description("Get All GAmes")
+    @Description("Validate all Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Get User Wishlists")
     public void getUserWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getUserWishlist(userId);
@@ -42,9 +42,9 @@ public class UpdateWishlistsTests extends TestBase {
 
     @Test
     @Order(2)
-    @Description("Get All GAmes")
+    @Description("Validate all Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Add to User Wishlists")
     public void AddUserWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response response = apiClient.getGames();
@@ -62,45 +62,13 @@ public class UpdateWishlistsTests extends TestBase {
         assertTrue(wishListModel.getItems().get(0).getUuid().equals(gameResponseModel.getGames().get(0).getUuid()));
     }
 
-//    @Test
-//    @Order(3)
-//    @Description("Get All GAmes")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Story("Get Games")
-//    public void getUserWishListsAfterAdding() {
-//        String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
-//        Response response = apiClient.getUserWishlist(userId);
-//
-//        assertEquals(response.getStatusCode(), 200);
-//        WishListModel wishListModel = response.as(WishListModel.class);
-//        assertEquals(wishListModel.getItems().size(), 1);
-//        SharedWishLists.wishListModels = List.of(wishListModel);
-//    }
 
-//    @Test
-//    @Order(4)
-//    @Description("Get All GAmes")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Story("Get Games")
-//    public void AddNotPresentGameToWishLists() {
-//        String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
-//
-//
-//        Map<String, Object> body = Map.of("item_uuid", BasicUtils.generateUUID());
-//
-//        Response wishResponse = apiClient.addGameToWishlist(userId, body);
-//
-//        assertEquals(wishResponse.getStatusCode(), 404);
-//        ErrorResponseModel wishListModel = wishResponse.as(ErrorResponseModel.class);
-//        assertEquals(wishListModel.getMessage(),"Could not find game with \"uuid\": " + body.get("item_uuid"));
-//
-//    }
 
     @Test
     @Order(3)
-    @Description("Get All GAmes")
+    @Description("Validate all Wishlist APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Add Multiple games to Wishlists")
     public void AddMultipleGamesToUserWishLists() {
         String userId = SharedUser.sharedCreatedUsers.get(1).getUuid();
         Response response = apiClient.getGames();
@@ -120,36 +88,6 @@ public class UpdateWishlistsTests extends TestBase {
 
     }
 
-//    @Test
-//    @Order(6)
-//    @Description("Get All GAmes")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Story("Get Games")
-//    public void AddSameGamesToUserWishLists() {
-//        String userId = SharedUser.sharedCreatedUsers.get(2).getUuid();
-//        Response response = apiClient.getGames();
-//        assertEquals(response.getStatusCode(), 200);
-//        GameResponseModel gameResponseModel = response.as(GameResponseModel.class);
-//        assertEquals(gameResponseModel.getGames().size(), 10);
-//
-//        Map<String, Object> body = Map.of("item_uuid", gameResponseModel.getGames().get(0).getUuid());
-//
-//        Response wishResponse = apiClient.addGameToWishlist(userId, body);
-//
-//        assertEquals(wishResponse.getStatusCode(), 200);
-//        WishListModel wishListModel = wishResponse.as(WishListModel.class);
-//        assertEquals(wishListModel.getItems().size(), 1);
-//        assertTrue(wishListModel.getItems().get(0).getUuid().equals(gameResponseModel.getGames().get(0).getUuid()));
-//
-//
-//        wishResponse = apiClient.addGameToWishlist(userId, body);
-//
-//        assertEquals(wishResponse.getStatusCode(), 200);
-//        wishListModel = wishResponse.as(WishListModel.class);
-//        assertEquals(wishListModel.getItems().size(), 1);
-//        assertTrue(wishListModel.getItems().get(0).getUuid().equals(gameResponseModel.getGames().get(0).getUuid()));
-//
-//    }
 
 
 }

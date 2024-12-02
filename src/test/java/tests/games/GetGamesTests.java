@@ -25,9 +25,9 @@ public class GetGamesTests extends TestBase {
 
     @Test
     @Order(1)
-    @Description("Get All GAmes")
+    @Description("Validate all Get Game APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Look for all games")
     public void validateGetAllGames() {
         Response response = apiClient.getGames();
         if(response.statusCode()== 200){
@@ -40,9 +40,9 @@ public class GetGamesTests extends TestBase {
 
     @Test
     @Order(2)
-    @Description("Get All GAmes")
+    @Description("Validate all Get Game APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Look for one Game")
     public void validateGetOneGame() {
         GamesModel gm = SharedGames.sharedGames.get(0);
         Response response = apiClient.getGameById(gm.getUuid());
@@ -59,10 +59,10 @@ public class GetGamesTests extends TestBase {
     }
 
     @Test
-    @Order(2)
-    @Description("Get All GAmes")
+    @Order(3)
+    @Description("Validate all Get Game APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Look for game which is not present")
     public void validateGetOneGameWithOutOtherUUID() {
         String nonGameUUID = BasicUtils.generateUUID();
         Response response = apiClient.getGameById(nonGameUUID);

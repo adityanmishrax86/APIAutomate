@@ -77,7 +77,7 @@ public class GetUserTests extends TestBase {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @Description("Fetch a user with a non-existing UUID")
     @Severity(SeverityLevel.NORMAL)
     @Story("Fetch User API")
@@ -91,7 +91,7 @@ public class GetUserTests extends TestBase {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @Description("Fetch a user without authentication")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Fetch User API")
@@ -106,7 +106,7 @@ public class GetUserTests extends TestBase {
 
 
     @Test
-    @Order(5)
+    @Order(6)
     @Description("SQL Injection Test")
     @Severity(SeverityLevel.BLOCKER)
     @Story("Fetch User API")

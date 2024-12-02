@@ -31,9 +31,9 @@ public class GetPaymentsTests extends TestBase {
     private final APIClient apiClient = new APIClient(AuthenticationUtils.getBearerToken());
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate all Payments API")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Create Orders for Payments")
     @Order(1)
     public void AddOrders() {
         SharedOrders.sharedOrders.clear();
@@ -69,9 +69,9 @@ public class GetPaymentsTests extends TestBase {
     }
 
     @Test
-    @Description("Get All GAmes")
+    @Description("Validate all Payments API")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("List all payments of user")
     @Order(2)
     public void ListSinglePayment() {
         String paymentId = SharedPayments.sharedPayments.get(0).getUuid();

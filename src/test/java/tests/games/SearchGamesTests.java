@@ -26,9 +26,9 @@ public class SearchGamesTests extends TestBase {
 
     @Test
     @Order(1)
-    @Description("Get All GAmes")
+    @Description("Validate All Search Games APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Get Games")
+    @Story("Get All Games")
     public void validateGetAllGames() {
         Response response = apiClient.getGames();
         if(response.statusCode()== 200){
@@ -41,9 +41,9 @@ public class SearchGamesTests extends TestBase {
 
     @Test
     @Order(2)
-    @Description("Search Game")
+    @Description("Validate All Search Games APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Search Game")
+    @Story("Search for the game from the title")
     public void validateSearchGame() {
         GamesModel searchGame = SharedGames.sharedGames.get(0);
         Map<String, Object> kv = Map.of("query", searchGame.getTitle());
@@ -63,9 +63,9 @@ public class SearchGamesTests extends TestBase {
 
     @Test
     @Order(3)
-    @Description("Search Game")
+    @Description("Validate All Search Games APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Search Game")
+    @Story("Search with Empty value fr Games")
     public void validateSearchGameWoParams() {
         Map<String, Object> kv = Map.of("", "");
         Response response = apiClient.searchGameByName(kv);
@@ -80,9 +80,9 @@ public class SearchGamesTests extends TestBase {
 
     @Test
     @Order(4)
-    @Description("Search Game")
+    @Description("Validate All Search Games APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Search Game")
+    @Story("Search with only one value")
     public void validateSearchGameWithOneValueParams() {
         Map<String, Object> kv = Map.of("query", "4");
         Response response = apiClient.searchGameByName(kv);
@@ -98,9 +98,9 @@ public class SearchGamesTests extends TestBase {
 
     @Test
     @Order(5)
-    @Description("Search Game")
+    @Description("Validate All Search Games APIs")
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Search Game")
+    @Story("Search with the value which is not present")
     public void validateSearchGameWithNoExistOneValueParams() {
         Map<String, Object> kv = Map.of("query", "1999");
         Response response = apiClient.searchGameByName(kv);
