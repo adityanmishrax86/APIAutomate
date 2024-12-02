@@ -121,7 +121,7 @@ public class GetOrdersTests extends TestBase {
             }
             body1.put("items", body2);
             Response orderResponse = apiClient.addOrders(userId, body1);
-            assertEquals(orderResponse.getStatusCode(), 400);
+            assertEquals(400, orderResponse.getStatusCode());
             ErrorResponseModel orderModel = orderResponse.as(ErrorResponseModel.class);
             assertTrue(orderModel.getMessage().contains("Items with the following \"uuid\" are duplicated:"));
 
@@ -155,7 +155,7 @@ public class GetOrdersTests extends TestBase {
         String orderId = SharedOrders.sharedOrders.get(0).getUuid();
         body.put("status", "canceled");
         Response orderResponse = apiClient.updateOrdersStatus(orderId, body);
-        assertEquals(orderResponse.getStatusCode(), 422);
+        assertEquals(422, orderResponse.getStatusCode());
         ErrorResponseModel orderModel = orderResponse.as(ErrorResponseModel.class);
         assertEquals("Operation forbidden. Order \"status\": the following statuses cannot be changed: completed, canceled", orderModel.getMessage());
 

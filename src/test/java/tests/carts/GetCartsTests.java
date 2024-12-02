@@ -52,12 +52,50 @@ public class GetCartsTests extends TestBase {
 
     }
 
+    @Test
+    @Description("Validate All Cart APIs")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Clear Cart items")
+    @Order(2)
+    public void ClearCartItems() {
+        String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
+        Map<String, Object> body = Map.of("item_uuid", BasicUtils.generateUUID());
+        Response cartResponse = apiClient.clearCartItems(userId, body);
+        assertEquals(cartResponse.getStatusCode(), 200);
+        CartModel cartModel = cartResponse.as(CartModel.class);
+        assertTrue(cartModel.getItems().isEmpty());
+        assertEquals(0, cartModel.getTotal_price());
+    }
+
+    @Test
+    @Description("Validate All Cart APIs")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Create Items to Cart")
+    @Order(3)
+    public void AddGamesToCartAgain() {
+        Map<String, Object> body = new HashMap<>();
+        Response gameResponse = apiClient.getGames();
+        assertEquals(gameResponse.getStatusCode(), 200);
+        GameResponseModel gameResponseModel = gameResponse.as(GameResponseModel.class);
+        assertFalse(gameResponseModel.getGames().isEmpty());
+        String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
+
+        for (int i = 1; i < 3; i++) {
+            body = Map.of("item_uuid", gameResponseModel.getGames().get(i-1).getUuid(), "quantity", 1);
+            Response cartResponse = apiClient.addGameToCart(userId, body);
+
+            assertEquals(cartResponse.getStatusCode(), 200);
+            SharedCart.sharedCarts.add(cartResponse.as(CartModel.class));
+        }
+
+    }
+
 
     @Test
     @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Get All cart items")
-    @Order(2)
+    @Order(4)
     public void GetCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Response cartResponse = apiClient.getUserCart(userId);
@@ -71,7 +109,7 @@ public class GetCartsTests extends TestBase {
     @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Change Cart items")
-    @Order(3)
+    @Order(5)
     public void ChangeCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", SharedCart.sharedCarts.get(0).getItems().get(0).getItem_uuid(), "quantity", 5);
@@ -87,7 +125,7 @@ public class GetCartsTests extends TestBase {
     @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Remove Cart items")
-    @Order(4)
+    @Order(6)
     public void RemoveCartItems() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", SharedCart.sharedCarts.get(0).getItems().get(0).getItem_uuid());
@@ -103,7 +141,7 @@ public class GetCartsTests extends TestBase {
     @Description("Validate All Cart APIs")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Remove cart items with invalid id")
-    @Order(5)
+    @Order(7)
     public void RemoveCartItemsWithInvalidUUID() {
         String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
         Map<String, Object> body = Map.of("item_uuid", BasicUtils.generateUUID());
@@ -114,20 +152,7 @@ public class GetCartsTests extends TestBase {
 
     }
 
-    @Test
-    @Description("Validate All Cart APIs")
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("Clear Cart items")
-    @Order(5)
-    public void ClearCartItems() {
-        String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
-        Map<String, Object> body = Map.of("item_uuid", BasicUtils.generateUUID());
-        Response cartResponse = apiClient.clearCartItems(userId, body);
-        assertEquals(cartResponse.getStatusCode(), 200);
-        CartModel cartModel = cartResponse.as(CartModel.class);
-        assertTrue(cartModel.getItems().isEmpty());
-        assertEquals(0, cartModel.getTotal_price());
-    }
+
 
 
 
