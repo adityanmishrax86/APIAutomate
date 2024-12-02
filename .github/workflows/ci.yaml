@@ -61,6 +61,7 @@ jobs:
 
       - name: Zip Allure Report
         run: |
+          cd target/site/allure-maven-plugin
           zip -r allure-report.zip target/site/allure-maven-plugin
 
       - name: Install Netlify CLI
@@ -81,7 +82,7 @@ jobs:
         run: |
           echo "Attempting to deploy to Netlify"
             netlify deploy \
-            --dir=./allure-report \
+            --dir=./target/site/allure-maven-plugin/* \
             --prod \
             --site $NETLIFY_SITE_ID \
             --auth $NETLIFY_AUTH_TOKEN \
