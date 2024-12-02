@@ -33,7 +33,7 @@ public class RemoveWishlistsTests extends TestBase {
     @Severity(SeverityLevel.CRITICAL)
     @Story("Get User Wishlists")
     public void getUserWishLists() {
-        String userId = SharedUser.sharedCreatedUsers.get(0).getUuid();
+        String userId = SharedUser.sharedCreatedUsers.get(1).getUuid();
         Response response = apiClient.getUserWishlist(userId);
 
         assertEquals(200,response.getStatusCode());

@@ -72,12 +72,17 @@ jobs:
           ls -l
           echo "Checking allure-report.zip details:"
           file allure-report.zip
-          unzip -l allure-report.zip
+          unzip allure-report.zip -d allure-report
 
       - name: Deploy Allure Report to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          echo "Attempting to Deploy"
-          netlify deploy --dir=./ --file=allure-report --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
+          echo "Attempting to deploy to Netlify"
+            netlify deploy \
+            --dir=./allure-report \
+            --prod \
+            --site $NETLIFY_SITE_ID \
+            --auth $NETLIFY_AUTH_TOKEN \
+            --message "Allure Report Deployment from GitHub Actions"
