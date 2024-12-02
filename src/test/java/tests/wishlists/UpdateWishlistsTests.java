@@ -56,7 +56,7 @@ public class UpdateWishlistsTests extends TestBase {
 
         Response wishResponse = apiClient.addGameToWishlist(userId, body);
 
-        assertEquals(200,response.getStatusCode());
+        assertEquals(200,wishResponse.getStatusCode());
         WishListModel wishListModel = wishResponse.as(WishListModel.class);
         assertEquals(1,wishListModel.getItems().size());
         assertTrue(wishListModel.getItems().get(0).getUuid().equals(gameResponseModel.getGames().get(0).getUuid()));
