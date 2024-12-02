@@ -24,6 +24,8 @@ import shared.SharedUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import static shared.SharedUser.initialized;
+
 
 public class TestBase {
 
@@ -131,8 +133,11 @@ public class TestBase {
     @BeforeAll
     public static void setup() {
         AuthenticationUtils.setToken();
-        deleteUsers();
-        setUpInitialUser();
+        if(!initialized) {
+            deleteUsers();
+            setUpInitialUser();
+            initialized = true;
+        }
         RestAssured.config = configureConnectionHandling();
         RestAssured.baseURI = ConfigurationManager.getBaseUrl();
         RestAssured.filters(

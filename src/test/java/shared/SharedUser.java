@@ -10,4 +10,5 @@ public class SharedUser {
     public static UserModel existingUser = null;
     public static List<UserModel> sharedUsers = new ArrayList<>();
     public static List<UserModel> sharedCreatedUsers = new ArrayList<>();
+    public static boolean initialized = false;
 }
