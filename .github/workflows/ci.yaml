@@ -36,10 +36,7 @@ jobs:
       - name: Run API tests
         env:
           ENV: ${{ inputs.environment || 'dev' }}
-        run: |
-          pwd
-          ls -R
-          mvn clean test -Denv=$ENV
+        run: mvn clean test -Dtest=OrderedTestSuite -Denv=$ENV
 
       - name: Generate Allure Report
         run: mvn allure:report
