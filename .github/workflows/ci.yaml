@@ -81,7 +81,7 @@ jobs:
         run: |
           echo "Attempting to deploy to Netlify"
             netlify deploy \
-            --dir=./target/site/allure-maven-plugin/* \
+            --dir=./target/site/allure-maven-plugin/ \
             --prod \
             --site $NETLIFY_SITE_ID \
             --auth $NETLIFY_AUTH_TOKEN \
