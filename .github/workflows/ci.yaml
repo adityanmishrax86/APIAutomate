@@ -80,12 +80,4 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
           echo "Attempting to Deploy"
-          DEPLOY_OUTPUT=$(netlify deploy \
-            --dir=allure-report \
-            --prod \
-            --site $NETLIFY_SITE_ID \
-            --auth $NETLIFY_AUTH_TOKEN \
-            --json)
-          DEPLOY_URL=$(echo $DEPLOY_OUTPUT | jq -r '.deploy_url')
-          echo "Deployment URL: $DEPLOY_URL"
-          echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          netlify deploy --dir=./ --file=allure-report --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
