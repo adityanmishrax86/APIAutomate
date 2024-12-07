@@ -1,6 +1,5 @@
 # REST Assured Test Automation Framework
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/99ce9f50-0aa7-4581-b0c1-f7ac63cc6b34/deploy-status)](https://app.netlify.com/sites/roaring-heliotrope-5d0d1d/deploys)
 
 ## Overview
 This framework provides a robust solution for API testing using REST Assured and Allure Reports.
