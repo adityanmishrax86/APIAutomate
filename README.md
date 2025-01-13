@@ -1,5 +1,8 @@
 # REST Assured Test Automation Framework
 
+## A Project built in a hackathon to extract bugs from an API
+### Got 2nd place in the hackathon
+### More can be read  [here](https://www.raptors.dev/project/bug-hunters----qa-hackathon-for-all-tech-enthusiasts)
 
 ## Overview
 This framework provides a robust solution for API testing using REST Assured and Allure Reports.
